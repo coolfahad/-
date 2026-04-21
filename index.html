@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حجز ملاعب المعلمين</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏫 حجز ملاعب المعلمين</h1>
+            <p class="date" id="currentDate"></p>
+        </header>
+
+        <!-- صفحة الدخول -->
+        <div id="loginPage" class="page">
+            <div class="login-box">
+                <h2>تسجيل الدخول</h2>
+                <input type="text" id="teacherId" placeholder="أدخل رقم الهوية">
+                <input type="text" id="teacherName" placeholder="أدخل اسمك (اسمان فقط)">
+                <button onclick="login()">دخول</button>
+            </div>
+        </div>
+
+        <!-- صفحة الحجز -->
+        <div id="bookingPage" class="page hidden">
+            <div class="user-info">
+                <div class="user-details">
+                    <span id="userName"></span>
+                    <span id="userId"></span>
+                </div>
+                <button class="logout-btn" onclick="logout()">خروج</button>
+            </div>
+
+            <div class="fields-container">
+                <h2>الملاعب</h2>
+                <div class="fields-grid" id="fieldsGrid">
+                </div>
+            </div>
+
+            <!-- نموذج الحجز -->
+            <div id="bookingModal" class="modal hidden">
+                <div class="modal-content">
+                    <h3 id="modalFieldName">حجز ملعب</h3>
+                    <div class="form-group">
+                        <label>من الساعة:</label>
+                        <select id="fromTime">
+                            <option value="8">8 صباحاً</option>
+                            <option value="9">9 صباحاً</option>
+                            <option value="10">10 صباحاً</option>
+                            <option value="11">11 صباحاً</option>
+                            <option value="12">12 ظهراً</option>
+                            <option value="13">1 ظهراً</option>
+                            <option value="14">2 ظهراً</option>
+                            <option value="15">3 عصراً</option>
+                            <option value="16">4 عصراً</option>
+                            <option value="17">5 عصراً</option>
+                            <option value="18">6 مساءً</option>
+                            <option value="19">7 مساءً</option>
+                            <option value="20">8 مساءً</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>إلى الساعة:</label>
+                        <select id="toTime">
+                            <option value="9">9 صباحاً</option>
+                            <option value="10">10 صباحاً</option>
+                            <option value="11">11 صباحاً</option>
+                            <option value="12">12 ظهراً</option>
+                            <option value="13">1 ظهراً</option>
+                            <option value="14">2 ظهراً</option>
+                            <option value="15">3 عصراً</option>
+                            <option value="16">4 عصراً</option>
+                            <option value="17">5 عصراً</option>
+                            <option value="18">6 مساءً</option>
+                            <option value="19">7 مساءً</option>
+                            <option value="20">8 مساءً</option>
+                            <option value="21">9 مساءً</option>
+                        </select>
+                    </div>
+                    <div class="modal-buttons">
+                        <button class="confirm-btn" onclick="confirmBooking()">تأكيد الحجز</button>
+                        <button class="cancel-btn" onclick="closeModal()">إلغاء</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- الحجوزات الحالية -->
+            <div class="bookings-section">
+                <h2>حجوزاتي</h2>
+                <div id="myBookings" class="bookings-list">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
