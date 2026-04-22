@@ -3,96 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حجز ملاعب المعلمين</title>
+    <title>حجز ملاعب المعلمين - School Fields</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🏫 حجز ملاعب المعلمين</h1>
-            <p class="date" id="currentDate"></p>
+    <div class="app-container">
+        <header class="main-header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">🏫</span>
+                    <div class="logo-text">
+                        <h1>حجز ملاعب المعلمين</h1>
+                        <p>Teacher Field Booking System</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="role-btn" onclick="switchRole()" id="roleBtn">👤 دور معلم</button>
+                    <span class="current-date" id="currentDate"></span>
+                </div>
+            </div>
         </header>
 
         <!-- صفحة الدخول -->
         <div id="loginPage" class="page">
-            <div class="login-box">
-                <h2>تسجيل الدخول</h2>
-                <input type="text" id="teacherId" placeholder="أدخل رقم الهوية">
-                <input type="text" id="teacherName" placeholder="أدخل اسمك (اسمان فقط)">
-                <button onclick="login()">دخول</button>
+            <div class="login-wrapper">
+                <div class="login-card">
+                    <div class="login-header">
+                        <div class="login-icon">🎯</div>
+                        <h2>تسجيل الدخول</h2>
+                        <p>أدخل بياناتك للوصول للنظام</p>
+                    </div>
+                    <div class="login-form">
+                        <div class="form-group">
+                            <label>🆔 رقم الهوية</label>
+                            <input type="text" id="teacherId" placeholder="أدخل رقم الهوية">
+                        </div>
+                        <div class="form-group">
+                            <label>👤 الاسم</label>
+                            <input type="text" id="teacherName" placeholder="أدخل اسمك">
+                        </div>
+                        <button class="login-btn" onclick="login()">دخول للنظام 🚀</button>
+                    </div>
+                    <div class="login-footer">
+                        <p>🆕 جديد في النظام؟ <a href="#" onclick="showRegister()">سجل هنا</a></p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- صفحة الحجز -->
-        <div id="bookingPage" class="page hidden">
-            <div class="user-info">
-                <div class="user-details">
-                    <span id="userName"></span>
-                    <span id="userId"></span>
-                </div>
-                <button class="logout-btn" onclick="logout()">خروج</button>
-            </div>
-
-            <div class="fields-container">
-                <h2>الملاعب</h2>
-                <div class="fields-grid" id="fieldsGrid">
-                </div>
-            </div>
-
-            <!-- نموذج الحجز -->
-            <div id="bookingModal" class="modal hidden">
-                <div class="modal-content">
-                    <h3 id="modalFieldName">حجز ملعب</h3>
-                    <div class="form-group">
-                        <label>من الساعة:</label>
-                        <select id="fromTime">
-                            <option value="8">8 صباحاً</option>
-                            <option value="9">9 صباحاً</option>
-                            <option value="10">10 صباحاً</option>
-                            <option value="11">11 صباحاً</option>
-                            <option value="12">12 ظهراً</option>
-                            <option value="13">1 ظهراً</option>
-                            <option value="14">2 ظهراً</option>
-                            <option value="15">3 عصراً</option>
-                            <option value="16">4 عصراً</option>
-                            <option value="17">5 عصراً</option>
-                            <option value="18">6 مساءً</option>
-                            <option value="19">7 مساءً</option>
-                            <option value="20">8 مساءً</option>
-                        </select>
+        <!-- الصفحة الرئيسية -->
+        <div id="mainPage" class="page hidden">
+            <!-- لوحة الإحصائيات -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">⚽</div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="totalFields">4</span>
+                        <span class="stat-label">الملاعب</span>
                     </div>
-                    <div class="form-group">
-                        <label>إلى الساعة:</label>
-                        <select id="toTime">
-                            <option value="9">9 صباحاً</option>
-                            <option value="10">10 صباحاً</option>
-                            <option value="11">11 صباحاً</option>
-                            <option value="12">12 ظهراً</option>
-                            <option value="13">1 ظهراً</option>
-                            <option value="14">2 ظهراً</option>
-                            <option value="15">3 عصراً</option>
-                            <option value="16">4 عصراً</option>
-                            <option value="17">5 عصراً</option>
-                            <option value="18">6 مساءً</option>
-                            <option value="19">7 مساءً</option>
-                            <option value="20">8 مساءً</option>
-                            <option value="21">9 مساءً</option>
-                        </select>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="todayBookings">0</span>
+                        <span class="stat-label">الحجوزات اليوم</span>
                     </div>
-                    <div class="modal-buttons">
-                        <button class="confirm-btn" onclick="confirmBooking()">تأكيد الحجز</button>
-                        <button class="cancel-btn" onclick="closeModal()">إلغاء</button>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="availableFields">0</span>
+                        <span class="stat-label">متاحة</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="totalTeachers">0</span>
+                        <span class="stat-label">المعلمين</span>
                     </div>
                 </div>
             </div>
 
-            <!-- الحجوزات الحالية -->
-            <div class="bookings-section">
-                <h2>حجوزاتي</h2>
-                <div id="myBookings" class="bookings-list">
+            <!-- شريط التنقل -->
+            <div class="tab-nav">
+                <button class="tab-btn active" data-tab="fields" onclick="showTab('fields')">⚽ الملاعب</button>
+                <button class="tab-btn" data-tab="weekly" onclick="showTab('weekly')">🗓️ الأسبوع</button>
+                <button class="tab-btn" data-tab="mybookings" onclick="showTab('mybookings')">📋 حجوزاتي</button>
+                <button class="tab-btn" data-tab="admin" onclick="showTab('admin')" id="adminTab" style="display:none">⚙️ الإدارة</button>
+            </div>
+
+            <!-- قسم الملاعب -->
+            <div id="fieldsTab" class="tab-content">
+                <div class="fields-header">
+                    <h2>الملاعب المتاحة</h2>
+                    <div class="filter-btns">
+                        <button class="filter-btn active" onclick="filterFields('all')">الكل</button>
+                        <button class="filter-btn" onclick="filterFields('available')">المتاحة</button>
+                        <button class="filter-btn" onclick="filterFields('booked')">المحجوزة</button>
+                    </div>
+                </div>
+                <div class="fields-grid" id="fieldsGrid"></div>
+            </div>
+
+            <!-- قسم الأسبوع -->
+            <div id="weeklyTab" class="tab-content hidden">
+                <div class="weekly-header">
+                    <h2>جدول الأسبوع</h2>
+                    <div class="week-nav">
+                        <button onclick="changeWeek(-1)">◀ السابق</button>
+                        <span id="weekRange"></span>
+                        <button onclick="changeWeek(1)">التالي ▶</button>
+                    </div>
+                </div>
+                <div class="weekly-grid" id="weeklyGrid"></div>
+            </div>
+
+            <!-- قسم حجوزاتي -->
+            <div id="mybookingsTab" class="tab-content hidden">
+                <div class="mybookings-header">
+                    <h2>حجوزاتي</h2>
+                    <button class="add-btn" onclick="showBookingModal()">➕ حجز جديد</button>
+                </div>
+                <div class="mybookings-list" id="myBookingsList"></div>
+            </div>
+
+            <!-- قسم الإدارة (للمدير) -->
+            <div id="adminTab" class="tab-content hidden">
+                <div class="admin-header">
+                    <h2>لوحة الإدارة</h2>
+                </div>
+                <div class="admin-stats">
+                    <div class="admin-stat">
+                        <h3>إحصائيات اليوم</h3>
+                        <div id="adminTodayStats"></div>
+                    </div>
+                </div>
+                <div class="admin-actions">
+                    <h3>إجراءات سريعة</h3>
+                    <button onclick="clearAllBookings()">🗑️ مسح جميع الحجوزات</button>
+                    <button onclick="exportData()">📤 تصدير البيانات</button>
+                    <button onclick="resetSystem()">🔄 إعادة تعيين النظام</button>
+                </div>
+                <div class="admin-bookings">
+                    <h3>جميع الحجوزات</h3>
+                    <div id="allBookingsList"></div>
                 </div>
             </div>
         </div>
+
+        <!-- نافذة الحجز -->
+        <div id="bookingModal" class="modal hidden">
+            <div class="modal-overlay" onclick="closeModal()"></div>
+            <div class="modal-card">
+                <div class="modal-header">
+                    <h3 id="modalTitle">حجز ملعب</h3>
+                    <button class="close-btn" onclick="closeModal()">✕</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>⚽ اختر الملعب</label>
+                        <select id="bookingField">
+                            <option value="1">ملعب كرة قدم</option>
+                            <option value="2">ملعب كرة سلة</option>
+                            <option value="3">ملعب كرة طائرة</option>
+                            <option value="4">ملعب تنس</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>🕐 من</label>
+                            <select id="fromTime">
+                                <option value="8">8:00 صباحاً</option>
+                                <option value="9">9:00 صباحاً</option>
+                                <option value="10">10:00 صباحاً</option>
+                                <option value="11">11:00 صباحاً</option>
+                                <option value="12">12:00 ظهراً</option>
+                                <option value="13">1:00 ظهراً</option>
+                                <option value="14">2:00 ظهراً</option>
+                                <option value="15">3:00 عصراً</option>
+                                <option value="16">4:00 عصراً</option>
+                                <option value="17">5:00 عصراً</option>
+                                <option value="18">6:00 مساءً</option>
+                                <option value="19">7:00 مساءً</option>
+                                <option value="20">8:00 مساءً</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>🕕 إلى</label>
+                            <select id="toTime">
+                                <option value="9">9:00 صباحاً</option>
+                                <option value="10">10:00 صباحاً</option>
+                                <option value="11">11:00 صباحاً</option>
+                                <option value="12">12:00 ظهراً</option>
+                                <option value="13">1:00 ظهراً</option>
+                                <option value="14">2:00 ظهراً</option>
+                                <option value="15">3:00 عصراً</option>
+                                <option value="16">4:00 عصراً</option>
+                                <option value="17">5:00 عصراً</option>
+                                <option value="18">6:00 مساءً</option>
+                                <option value="19">7:00 مساءً</option>
+                                <option value="20">8:00 مساءً</option>
+                                <option value="21">9:00 مساءً</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>📅 التاريخ</label>
+                        <input type="date" id="bookingDate">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="confirm-btn" onclick="confirmBooking()">✅ تأكيد الحجز</button>
+                    <button class="cancel-btn" onclick="closeModal()">إلغاء</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- إشعار toast -->
+        <div id="toast" class="toast hidden"></div>
     </div>
 
     <script src="script.js"></script>
